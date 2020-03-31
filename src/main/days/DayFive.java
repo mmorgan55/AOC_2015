@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DayFour {
+public class DayFive {
 
   public void findNiceStrings() {
-    File file = Helpers.loadFile(Days.class.getResource("resources/day-four.txt"));
+    File file = Helpers.loadFile(Days.class.getResource("resources/day-five.txt"));
     int niceStrings = 0;
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
