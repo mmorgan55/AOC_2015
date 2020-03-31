@@ -1,10 +1,12 @@
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Days {
 
@@ -15,7 +17,6 @@ public class Days {
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       char[] chars = new char[(int) file.length()];
-      reader.read(chars);
       for (int i = 0; i < chars.length; i++) {
         if (chars[i] == '(') {
           floor++;
@@ -77,6 +78,55 @@ public class Days {
 
     } catch (IOException ex) {
       ex.printStackTrace();
+    }
+  }
+
+  public void visitedHouses() {
+    File file = loadFile(Days.class.getResource("resources/day-three.txt"));
+    Set<Point> housesVisited = new HashSet<>();
+    int sx = 0;
+    int sy = 0;
+    int rx = 0;
+    int ry = 0;
+
+    housesVisited.add(new Point(sx, sy));
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+      char[] directions = new char[(int) file.length()];
+      reader.read(directions);
+
+      for (int i = 0; i < directions.length; i++) {
+
+        int whoMoves = i % 2;
+        switch (whoMoves) {
+          case 0:
+            if (directions[i] == '^') {
+              sy++;
+            } else if (directions[i] == 'v') {
+              sy--;
+            } else if (directions[i] == '>') {
+              sx++;
+            } else if (directions[i] == '<') {
+              sx--;
+            }
+            housesVisited.add(new Point(sx, sy));
+            break;
+          case 1:
+            if (directions[i] == '^') {
+              ry++;
+            } else if (directions[i] == 'v') {
+              ry--;
+            } else if (directions[i] == '>') {
+              rx++;
+            } else if (directions[i] == '<') {
+              rx--;
+            }
+            housesVisited.add(new Point(rx, ry));
+        }
+      }
+      System.out.println(housesVisited.size());
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
