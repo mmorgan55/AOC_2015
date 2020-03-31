@@ -3,7 +3,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -130,8 +133,37 @@ public class Days {
     }
   }
 
+  public void findHash() {
+    StringBuilder sb = new StringBuilder("bgvyzdsv");
+    int i = 1;
+    while (true) {
+      String hash = getMD5(sb.toString() + i);
+      if (hash.startsWith("000000")) {
+        System.out.println(hash);
+        System.out.println(i);
+        break;
+      }
+      i++;
+    }
+  }
+
   private File loadFile(URL path) {
     return new File(path.getFile());
+  }
+
+  private String getMD5(String input) {
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      byte[] messageDigest = md.digest(input.getBytes());
+      StringBuilder hash = new StringBuilder(new BigInteger(1, messageDigest).toString(16));
+      while (hash.length() < 32) {
+        hash.insert(0, "0");
+      }
+      return hash.toString();
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }
 
