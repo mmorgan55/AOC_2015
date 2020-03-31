@@ -20,6 +20,7 @@ public class Days {
 
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       char[] chars = new char[(int) file.length()];
+      reader.read(chars);
       for (int i = 0; i < chars.length; i++) {
         if (chars[i] == '(') {
           floor++;
